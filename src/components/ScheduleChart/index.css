@@ -1,0 +1,34 @@
+.schedule-item {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.color-line {
+  width: 15px;
+  height: 120px;
+  color: red;
+  background-color: red;
+  margin-right: 5px;
+}
+
+.color-line2 {
+  width: 15px;
+  height: 120px;
+  color: green;
+  background-color: green;
+  margin-right: 5px;
+}
+
+.schedule-styling {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.schedule-container {
+  width: 500px;
+  height: 374.4px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 25px;
+}
