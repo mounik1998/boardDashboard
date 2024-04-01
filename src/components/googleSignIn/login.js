@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import {signInWithPopup} from 'firebase/auth'
-import Cookies from 'js-cookie'
 import {FcGoogle} from 'react-icons/fc'
 import {FaApple} from 'react-icons/fa'
 import Home from '../Home'
@@ -12,7 +11,11 @@ class Login extends Component {
     username: '',
     password: '',
     errorMsg: '',
-    access: false,
+    email: null,
+  }
+
+  emailUndefined = () => {
+    this.setState({email: null})
   }
 
   submitFormForLogin = e => {
@@ -29,13 +32,10 @@ class Login extends Component {
 
   signInWithGoogle = () => {
     signInWithPopup(auth, provider).then(data => {
-      Cookies.set('email', data.user.email, {expires: 2})
+      console.log(data.user.email)
+      this.setState({email: data.user.email})
+      localStorage.setItem('email', data.user.email)
     })
-    const userEmail = Cookies.get('email')
-    console.log(userEmail)
-    if (userEmail !== undefined) {
-      this.setState({access: true})
-    }
   }
 
   onChangeUsername = e => {
@@ -84,12 +84,12 @@ class Login extends Component {
   }
 
   render() {
-    const {errorMsg, access} = this.state
-    console.log(access)
+    const {errorMsg, email} = this.state
+    console.log(email)
     const errorMsgClass =
       errorMsg === '' ? 'error-msg-hidden' : 'error-msg-show'
-    if (access) {
-      return <Home />
+    if (email !== null) {
+      return <Home emailUndefined={this.emailUndefined} />
     }
     return (
       <div className="login-page-main-container">
@@ -115,6 +115,9 @@ class Login extends Component {
             <form
               className="main-login-form"
               onSubmit={this.submitFormForLogin}
+              id="loginForm"
+              name="form"
+              autoComplete="given-name"
             >
               <div className="input-container">
                 {this.renderUsernameField()}
